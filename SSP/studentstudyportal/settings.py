@@ -30,6 +30,9 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'Dashboard.apps.DashboardConfig'
 ]
 
@@ -124,4 +128,9 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL='/static/'
+
+
 STATICFILES_DIRS = [BASE_DIR/'static']
+
+LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL  = 'login'

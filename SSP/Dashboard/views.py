@@ -9,6 +9,7 @@ from django.urls import reverse
 from youtubesearchpython import VideosSearch
 
 
+
 # Create your views here.
 
 
@@ -147,3 +148,24 @@ def todo(request):
         'todos': todo,
     }
     return render(request, 'dashboard/todo.html', context)
+
+
+# login and registration
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f"Account created for {username}!!")
+            # return redirect(User/login.html)
+      
+    else:
+        form = UserRegistrationForm()
+    context = {
+        'form':form
+    }
+    return render(request, 'User/register.html', context)
+

@@ -1,5 +1,8 @@
 from django import forms
 from .models import *
+from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
+
 
 
 class NotesForm(forms.ModelForm):
@@ -19,3 +22,12 @@ class HomeworkForm(forms.ModelForm):
 
 class DashboardForm(forms.Form):
     text = forms.CharField(max_length = 100, label = "Enter Your Search: "),
+
+
+
+class UserRegistrationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username','email', 'password1', 'password2']
+
+        

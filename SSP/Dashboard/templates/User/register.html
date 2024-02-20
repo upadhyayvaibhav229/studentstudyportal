@@ -1,13 +1,33 @@
-{% extends 'dashboard/base.html' %} {% load static %}
-<!-- {% load crispy_forms_tags%} -->
+{% extends 'dashboard/base.html' %}
+{% load static %}
+<!-- {% load crispy_forms_tags %} -->
+<!-- book@1234 -->
 {% block content %}
 <div class="container">
   <form method="POST">
+    {% csrf_token %}
     <fieldset class="form-group">
       <legend class="border-bottom mb-4">Join Today</legend>
-    </fieldset>
+      {{form}}
+      <div class="form-group">
+        <!-- <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" placeholder="Enter username" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password" required>
+      </div>
+    </fieldset> -->
     <div class="form-group">
-      <button href="" class="btn btn-outline-info" type="submit">
+      <button class="btn btn-outline-info" type="submit">
         Sign Up
       </button>
     </div>
@@ -18,5 +38,4 @@
     </small>
   </div>
 </div>
-
 {% endblock %}

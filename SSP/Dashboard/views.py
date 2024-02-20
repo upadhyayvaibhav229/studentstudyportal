@@ -7,6 +7,8 @@ from django.views import generic
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from youtubesearchpython import VideosSearch
+from .forms import UserRegistrationForm
+
 
 
 
@@ -154,13 +156,15 @@ def todo(request):
 
 
 def register(request):
+    # bhakti
+    # bha@12345
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f"Account created for {username}!!")
-            # return redirect(User/login.html)
+            
       
     else:
         form = UserRegistrationForm()

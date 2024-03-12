@@ -47,59 +47,43 @@ class NotesDetailView(generic.DetailView):
     model = Notes
 
 
-
 def homework(request):
     if request.method == 'POST':
         form = HomeworkForm(request.POST)
         if form.is_valid():
-            try:
-                finished = request.POST['is_finished']
-                if finished == 'on':
-                    finished = True
-                else:
-                    finished = False
-            except:
-                finished = False
-
+            finished = request.POST.get('is_finished', False) == 'on'
             homeworks = Homework(
-                user = request.user,
-                Subject = request.POST['Subject'],
-                Title = request.POST['Title'],
-                Description = request.POST['Description'],
-                Due = request.POST['Due'],
-                is_finished = finished
+                user=request.user,
+                Subject=request.POST['Subject'],
+                Title=request.POST['Title'],
+                Description=request.POST['Description'],
+                Due=request.POST['Due'],
+                is_finished=finished
             )
             homeworks.save()
-            messages.success(request,f'Homework Added from {request.user.username}!!')
+            messages.success(request, f'Homework Added from {request.user.username}!!')
+            return redirect('homework')
     else:
         form = HomeworkForm()
-    homework = Homework.objects.filter(user = request.user)
-    if len(homework) == 0:
-        homework_done = True
-    else:
-        homework_done = False
-    
+    homeworks = Homework.objects.filter(user=request.user)
+    homework_done = not homeworks.exists()
     context = {
-        'homeworks':homework,
+        'homeworks': homeworks,
         'homeworks_done': homework_done,
         'form': form,
     }
-
     return render(request, 'dashboard/homework.html', context)
 
-def update_homework(request, pk = None):
-    homework = Homework.objects.get(id = pk)
-    if homework.is_finished == True:
-        homework.is_finished = False
-    else:
-        homework.is_finished = True
+def update_homework(request, pk=None):
+    homework = Homework.objects.get(id=pk)
+    homework.is_finished = not homework.is_finished
     homework.save()
-    print("print before before redirect")
-    return redirect('Homework')
+    return redirect('homework')
 
 def delete_homework(request, pk=None):
-    homework = Homework.objects.get(id = pk).delete()
-    return redirect('Homework')
+    homework = Homework.objects.get(id=pk).delete()
+    return redirect('homework')
+
 
 def youtube(request):
     if request.method == 'POST':
@@ -144,10 +128,20 @@ def youtube(request):
     return render(request, 'dashboard/youtube.html', context)
 
 
+from django.shortcuts import render, redirect
+from .models import Todo
+
 def todo(request):
-    todo = Todo.objects.filter(user = request.user)
+    if request.method == 'POST':
+        todo_id = request.POST.get('todo_id')
+        todo = Todo.objects.get(pk=todo_id)
+        todo.is_finished = not todo.is_finished  # Toggle the status
+        todo.save()
+        return redirect('todo')  # Redirect back to the todo page
+
+    todos = Todo.objects.filter(user=request.user)
     context = {
-        'todos': todo,
+        'todos': todos,
     }
     return render(request, 'dashboard/todo.html', context)
 

@@ -23,23 +23,20 @@
                 <th scope="row">{{forloop.counter}}</th>
                 <td>{{homework.Subject}}</td>
                 <td>{{homework.Title}}</td>
-                <td>{{homework.Descrption}}</td>
+                <td>{{homework.Description}}</td>
                 <td>{{homework.Due}}</td>
                 
                 <td>
                     <a href="{% url 'update-homework' homework.id %}">
                         <div class="form-check">
-                            {% if homework.is_finished == True %}
-                            <input class="form-check-input" type="checkbox" value="" checked>
-                            {%  else %}
-                            <input class="form-check-input" type="checkbox" value="">
-                            {% endif %}
+                            <input class="form-check-input" type="checkbox" {% if homework.is_finished %}checked{% endif %}>
                             <label class="form-check-label text-light" for="flexCheckDefault">
                                 Mark as Completed
                             </label>
                         </div>
                     </a>
                 </td>
+                
                 <td><a href="{% url 'delete-homework' homework.id %}"><i class="fa fa-trash fa-2x"></i></a></td>
             </tr>
             {% endfor %}

@@ -30,4 +30,10 @@ class UserRegistrationForm(UserCreationForm):
         model = User
         fields = ['username', 'password1', 'password2']
 
+
+class Todoform(forms.ModelForm):
+    class Meta:
+        models = Todo
+        fields = ['title', 'is_finished']
+
         

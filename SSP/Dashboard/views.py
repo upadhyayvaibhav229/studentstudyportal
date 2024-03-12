@@ -128,8 +128,7 @@ def youtube(request):
     return render(request, 'dashboard/youtube.html', context)
 
 
-from django.shortcuts import render, redirect
-from .models import Todo
+
 
 def todo(request):
     if request.method == 'POST':
@@ -138,10 +137,12 @@ def todo(request):
         todo.is_finished = not todo.is_finished  # Toggle the status
         todo.save()
         return redirect('todo')  # Redirect back to the todo page
-
+    form = Todoform()
     todos = Todo.objects.filter(user=request.user)
+    
     context = {
         'todos': todos,
+        'form': form,
     }
     return render(request, 'dashboard/todo.html', context)
 

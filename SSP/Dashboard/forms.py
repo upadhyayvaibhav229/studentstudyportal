@@ -33,7 +33,7 @@ class UserRegistrationForm(UserCreationForm):
 
 class Todoform(forms.ModelForm):
     class Meta:
-        models = Todo
+        model = Todo
         fields = ['title', 'is_finished']
 
         

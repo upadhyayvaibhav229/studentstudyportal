@@ -137,6 +137,7 @@ def todo(request):
         todo.is_finished = not todo.is_finished  # Toggle the status
         todo.save()
         return redirect('todo')  # Redirect back to the todo page
+    
     form = Todoform()
     todos = Todo.objects.filter(user=request.user)
     

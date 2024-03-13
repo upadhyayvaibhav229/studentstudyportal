@@ -133,20 +133,41 @@ def youtube(request):
 def todo(request):
     if request.method == 'POST':
         todo_id = request.POST.get('todo_id')
-        todo = Todo.objects.get(pk=todo_id)
-        todo.is_finished = not todo.is_finished  # Toggle the status
-        todo.save()
-        return redirect('todo')  # Redirect back to the todo page
-    
-    form = Todoform()
+        if todo_id:
+            todo = Todo.objects.get(pk=todo_id)
+            todo.is_finished = not todo.is_finished  # Toggle the status
+            todo.save()
+            return redirect('todo')  # Redirect back to the todo page
+
+        form = Todoform(request.POST)
+        if form.is_valid():
+            finished = form.cleaned_data['is_finished']
+            todos = Todo(
+                user=request.user,
+                
+                title=form.cleaned_data['title'],
+                is_finished=finished
+            )
+            todos.save()
+            messages.success(request, 'Task added successfully!')
+            return redirect('todo')  # Redirect back to the todo page
+
+    else:  # If the request method is not POST
+        form = Todoform()
+
     todos = Todo.objects.filter(user=request.user)
+
+    if len(todos):
+        todos_done = True
+    else:
+        todos_done = False
     
     context = {
         'todos': todos,
         'form': form,
+        'todos_done' : todos_done
     }
     return render(request, 'dashboard/todo.html', context)
-
 
 # login and registration
 

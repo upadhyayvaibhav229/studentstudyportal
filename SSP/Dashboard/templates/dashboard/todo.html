@@ -3,6 +3,7 @@
 {% block content %}
 
 <div class="container">
+    {% if not todos_done %}
     {% if not todo_done %}
     <table class="table table-striped table-bordered table-hover table-dark">
         <thead>
@@ -40,11 +41,8 @@
             {% endfor %}
         </tbody>
     </table>
-    {% else %}
-    <h4>All tasks have been done!! Create to add more</h4>
-    {% endif %}
-</div>
-<br><br>
+    <h4>All tasks have been done!! create to add more</h4>
+</div><br><br>
 <div class="container">
     <form method="POST">
         <fieldset class="form-group">

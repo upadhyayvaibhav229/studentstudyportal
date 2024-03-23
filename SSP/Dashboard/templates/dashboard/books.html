@@ -34,12 +34,12 @@
                         {% if result.description %}
                         <h6 class="p-0 m-1">{{result.description}}</h6>
                         {% endif %}
-                        {% if result.categories %}
                         <b> 
+                            {% if result.categories %}
                             <h6 class="ml-0 mt-3">Category: 
                                 {% for Category in result.categories %}
 
-                                    {{ Category }}
+                                    {{ category }}
                                 {% endfor %}
                             </h6>
                             {% endif %}

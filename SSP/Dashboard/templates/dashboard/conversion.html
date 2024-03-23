@@ -6,37 +6,57 @@
         {% csrf_token %}
         <div class="form-group">
             <legend class="border-bottom mb-4"></legend>
-            {{forms}}
-            <button href="" class="btn btn-outline-info" type="submit">
+            <label for="id_measurement">Measurement:</label><br>
+            <input type="radio" id="id_length" name="measurement" value="length">
+            <label for="id_length">Length</label><br>
+            <input type="radio" id="id_mass" name="measurement" value="mass">
+            <label for="id_mass">Mass</label><br>
+            <button class="btn btn-outline-info" type="submit">
                 Select
             </button>
         </div>
-        {% if input %}
+    </form>
+    
+    {% if input %}
+    <form method="POST">
+        {% csrf_token %}
         <fieldset class="form-group">
-
-            <legend class="border-bottom mb-4"></legend>
+            <legend class="border-bottom mb-4">Conversion Details</legend>
             <div class="row">
-                {{ m_form.input }}
+                <label for="id_input">Input:</label><br>
+                <input type="number" id="id_input" name="input" placeholder="Enter the Number">
             </div>
             <div class="row">
-                {{ m_form.measure1 }}
+                <label for="id_measure1">Measure 1:</label><br>
+                <select id="id_measure1" name="measure1">
+                    <option value="yard">Yard</option>
+                    <option value="foot">Foot</option>
+                    <option value="meter">Meter</option>
+                    <option value="inch">Inch</option>
+                </select>
             </div>
             <div class="row">
-                {{ m_form.measure2 }}
+                <label for="id_measure2">Measure 2:</label><br>
+                <select id="id_measure2" name="measure2">
+                    <option value="yard">Yard</option>
+                    <option value="foot">Foot</option>
+                    <option value="meter">Meter</option>
+                    <option value="inch">Inch</option>
+                </select>
             </div>
-
         </fieldset>
 
         <fieldset class="form-group">
-            {{answer}}
+            <legend class="border-bottom mb-4">Conversion Result</legend>
+            {{ answer }}
         </fieldset>
+        
         <div class="form-group">
-            <button href="" class="btn btn-outline-info" type="submit">
+            <button class="btn btn-outline-info" type="submit">
                 Convert
             </button>
         </div>
-        {% endif %}
     </form>
+    {% endif %}
 </div>
-
 {% endblock content %}

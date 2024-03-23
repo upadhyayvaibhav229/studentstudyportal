@@ -1,16 +1,16 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
-{% block content %}
 
+{% block content %}
 <div class="container">
     {% if not todos_done %}
-    {% if not todo_done %}
     <table class="table table-striped table-bordered table-hover table-dark">
         <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Title</th>
                 <th scope="col">Status</th>
+                <th scope="col">Study Time</th>
                 <th scope="col">Delete</th>
             </tr>
         </thead>
@@ -36,19 +36,25 @@
                         </div>
                     </a>
                 </td>
+                <td>{{ todo.study_time }}</td>
                 <td><a href="{% url 'delete_todo' todo.id %}"><i class="fa fa-trash fa-2x"></i></a></td>
             </tr>
-            {% endfor %}
+            {%endfor %}
         </tbody>
     </table>
+    {% else %}
     <h4>All tasks have been done!! create to add more</h4>
+    {% endif %}
 </div><br><br>
+
 <div class="container">
     <form method="POST">
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Create Todo</legend>
             {% csrf_token %}
             {{ form.as_p }}
+            <label for="study_time">Study Time:</label>
+            <input type="datetime-local" name="study_time" id="study_time" value="{{ form.study_time.value }}">
         </fieldset>
         <div class="form-group">
             <button href="" class="btn btn-outline-info" type="submit">Create</button>

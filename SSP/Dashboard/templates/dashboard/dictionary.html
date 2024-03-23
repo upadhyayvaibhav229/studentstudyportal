@@ -5,7 +5,7 @@
     <h2>Student Dictionary</h2>
     <p>Enter any word to get the phonetics, definition and an example for the word</p>
     <form action="" method="post">
-        {{form.as_p}}
+        {{ form.as_p }}
         {% csrf_token %}
         <div class="input-group">
             <input class="form-control me-1" type="search" placeholder="Enter your search" aria-label="Search" name="text">
@@ -30,10 +30,12 @@
         <p class="float-left">
             <h4>Definition: {{ definition }}</h4>
             <h4>Example: {{ example }}</h4>
-            Synonyms:
+            <h4>Synonyms:</h4>
+            <ul>  <!-- Use an unordered list to display synonyms -->
             {% for synonym in synonyms %}
-                {{ synonym }}
+                <li>{{ synonym }}</li>  <!-- Display each synonym individually -->
             {% endfor %}
+            </ul>
         </p>
         <hr>
     
@@ -41,6 +43,6 @@
         <h2>Sorry, API request limit exceeded</h2>
         {% endif %}
     </div>
-    
 </section>
+
 {% endblock content %}

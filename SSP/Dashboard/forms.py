@@ -58,18 +58,18 @@ class ConversionLengthForm(forms.Form):
         label= '', widget= forms.Select(choices= CHOICES)
     )
 
-class ConversionMassForm(forms.Form):
-    CHOICES = [('kilogram', 'Kilogram'), ('pound','Pound')]
-    input = forms.CharField(required= False, label= False, widget= forms.TextInput(
-        attrs = {'types': 'number', 'placeholder': 'Enter the Number'}
+class ConversionLengthForm(forms.Form):
+    LENGTH_CHOICES = [('yard', 'Yard'), ('foot', 'Foot'), ('meter', 'Meter'), ('inch', 'Inch')]
+    input = forms.CharField(required=False, label=False, widget=forms.TextInput(
+        attrs={'type': 'number', 'placeholder': 'Enter the Number'}
     ))
+    measure1 = forms.ChoiceField(choices=LENGTH_CHOICES, label='', widget=forms.Select)
+    measure2 = forms.ChoiceField(choices=LENGTH_CHOICES, label='', widget=forms.Select)
 
-    measure1 = forms.CharField(
-
-        label= '', widget= forms.Select(choices= CHOICES)
-    )
-
-    measure2 = forms.CharField(
-
-        label= '', widget= forms.Select(choices= CHOICES)
-    )
+class ConversionMassForm(forms.Form):
+    MASS_CHOICES = [('kilogram', 'Kilogram'), ('pound', 'Pound'), ('gram', 'Gram'), ('ounce', 'Ounce')]
+    input = forms.CharField(required=False, label=False, widget=forms.TextInput(
+        attrs={'type': 'number', 'placeholder': 'Enter the Number'}
+    ))
+    measure1 = forms.ChoiceField(choices=MASS_CHOICES, label='', widget=forms.Select)
+    measure2 = forms.ChoiceField(choices=MASS_CHOICES, label='', widget=forms.Select)

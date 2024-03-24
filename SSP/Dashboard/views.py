@@ -110,24 +110,18 @@ def youtube(request):
 
 
 # todo section
-from django.core.mail import send_mail
-from django.contrib import messages
 
+from django.contrib.auth.decorators import login_required
+@login_required
+
+@login_required
 def todo(request):
     if request.method == 'POST':
         form = Todoform(request.POST)
         if form.is_valid():
-            study_time = form.cleaned_data['study_time']
-            if study_time < timezone.now():
-                send_mail(
-                    'Study task reminder!',
-                    'You have a study task that you have not completed yet.',
-                    'your_email@example.com',
-                    [request.user.email],
-                    fail_silently=False,
-                )
-                messages.info(request, 'A study task is overdue. Please check it.')
-            form.save()
+            todo = form.save(commit=False)  # Don't save immediately
+            todo.user = request.user  # Assign the user to the todo
+            todo.save()  # Save with the user assigned
             messages.success(request, f'Submitted successfully {request.user.username}!!')
             return redirect('todo')
     else:
@@ -135,7 +129,6 @@ def todo(request):
     todos = Todo.objects.filter(user=request.user)
     context = {'todos': todos, 'form': form}
     return render(request, 'dashboard/todo.html', context)
-
 @login_required
 def update_todo(request, pk=None):
     todo = get_object_or_404(Todo, id=pk)

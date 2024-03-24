@@ -17,7 +17,7 @@ class HomeworkForm(forms.ModelForm):
     class Meta:
         model = Homework
         widgets = {'Due': DateInput()}
-        fields = ['Subject','Title', 'Description', 'Due', 'is_finished']
+        fields = ['Subject','Title', 'is_finished']
 
 
 class DashboardForm(forms.Form):
